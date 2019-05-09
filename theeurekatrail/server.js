@@ -21,7 +21,4 @@ app.use('*', function(req, res) {
 });
 
 //build and run the server
-https.createServer(options, function (req, res) {
-  res.writeHead(200);
-  res.end('Server Listening');
-}).listen(8001, function() { console.log('listening on port 8001!'); })
+https.createServer(options, app).listen(8001, function() { console.log('listening on port 8001!'); })

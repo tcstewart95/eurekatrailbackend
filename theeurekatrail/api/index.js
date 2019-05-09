@@ -12,8 +12,8 @@ router.use(bodyParser())
 
 //call to create user
 router.post('/create/user', async (req, res) => {
+    console.log('made it this far');
     const { username, password, hp, company_id, inventory_id, role_id, image } = req.body
-    console.log(username);
     db.createAccount(username, password, hp, company_id, inventory_id, role_id, image, async function (data) {
         if (data) {
            res.status(201).send('user created')
