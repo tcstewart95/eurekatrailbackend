@@ -5,8 +5,6 @@ const db = require('../database/queries.js')
 // this is the top level API router that includes other API routers
 const router = new Router()
 
-module.exports = router
-
 // use the json body parser on all routes
 router.use(bodyParser())
 
@@ -23,3 +21,5 @@ router.post('/create/user', async (req, res) => {
         }
     })
 })
+
+module.exports = router
