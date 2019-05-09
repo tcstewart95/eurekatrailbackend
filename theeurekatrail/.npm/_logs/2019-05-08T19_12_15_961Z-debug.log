@@ -1,0 +1,153 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/bin/node', '/usr/bin/npm', 'install', '--save', 'helmet' ]
+2 info using npm@6.4.1
+3 info using node@v8.16.0
+4 verbose npm-session bad7d8b1cd9405d4
+5 silly install loadCurrentTree
+6 silly install readLocalPackageData
+7 http fetch GET 200 https://registry.npmjs.org/helmet 107ms
+8 silly pacote tag manifest for helmet@latest fetched in 122ms
+9 timing stage:loadCurrentTree Completed in 296ms
+10 silly install loadIdealTree
+11 silly install cloneCurrentTreeToIdealTree
+12 timing stage:loadIdealTree:cloneCurrentTree Completed in 1ms
+13 silly install loadShrinkwrap
+14 timing stage:loadIdealTree:loadShrinkwrap Completed in 0ms
+15 silly install loadAllDepsIntoIdealTree
+16 silly resolveWithNewModule helmet@3.18.0 checking installable status
+17 http fetch GET 200 https://registry.npmjs.org/dns-prefetch-control 56ms
+18 silly pacote version manifest for dns-prefetch-control@0.1.0 fetched in 58ms
+19 silly resolveWithNewModule dns-prefetch-control@0.1.0 checking installable status
+20 http fetch GET 200 https://registry.npmjs.org/dont-sniff-mimetype 121ms
+21 http fetch GET 200 https://registry.npmjs.org/expect-ct 123ms
+22 http fetch GET 200 https://registry.npmjs.org/hide-powered-by 121ms
+23 http fetch GET 200 https://registry.npmjs.org/hsts 65ms
+24 http fetch GET 200 https://registry.npmjs.org/helmet-crossdomain 122ms
+25 http fetch GET 200 https://registry.npmjs.org/frameguard 124ms
+26 http fetch GET 200 https://registry.npmjs.org/hpkp 126ms
+27 http fetch GET 200 https://registry.npmjs.org/feature-policy 128ms
+28 http fetch GET 304 https://registry.npmjs.org/depd 139ms (from cache)
+29 silly pacote version manifest for dont-sniff-mimetype@1.0.0 fetched in 141ms
+30 silly resolveWithNewModule dont-sniff-mimetype@1.0.0 checking installable status
+31 silly pacote version manifest for hide-powered-by@1.0.0 fetched in 139ms
+32 silly resolveWithNewModule hide-powered-by@1.0.0 checking installable status
+33 silly pacote version manifest for hsts@2.2.0 fetched in 83ms
+34 silly resolveWithNewModule hsts@2.2.0 checking installable status
+35 silly pacote version manifest for helmet-crossdomain@0.3.0 fetched in 141ms
+36 silly resolveWithNewModule helmet-crossdomain@0.3.0 checking installable status
+37 silly pacote version manifest for expect-ct@0.2.0 fetched in 150ms
+38 silly resolveWithNewModule expect-ct@0.2.0 checking installable status
+39 silly pacote version manifest for frameguard@3.1.0 fetched in 150ms
+40 silly resolveWithNewModule frameguard@3.1.0 checking installable status
+41 silly pacote version manifest for hpkp@2.0.0 fetched in 148ms
+42 silly resolveWithNewModule hpkp@2.0.0 checking installable status
+43 silly pacote version manifest for feature-policy@0.3.0 fetched in 151ms
+44 silly resolveWithNewModule feature-policy@0.3.0 checking installable status
+45 http fetch GET 200 https://registry.npmjs.org/helmet-csp 152ms
+46 silly pacote version manifest for depd@2.0.0 fetched in 157ms
+47 silly resolveWithNewModule depd@2.0.0 checking installable status
+48 silly pacote version manifest for helmet-csp@2.7.1 fetched in 155ms
+49 silly resolveWithNewModule helmet-csp@2.7.1 checking installable status
+50 http fetch GET 200 https://registry.npmjs.org/ienoopen 31ms
+51 http fetch GET 200 https://registry.npmjs.org/nocache 32ms
+52 http fetch GET 200 https://registry.npmjs.org/referrer-policy 33ms
+53 silly pacote version manifest for ienoopen@1.1.0 fetched in 37ms
+54 silly resolveWithNewModule ienoopen@1.1.0 checking installable status
+55 silly pacote version manifest for nocache@2.1.0 fetched in 37ms
+56 silly resolveWithNewModule nocache@2.1.0 checking installable status
+57 silly pacote version manifest for referrer-policy@1.2.0 fetched in 38ms
+58 silly resolveWithNewModule referrer-policy@1.2.0 checking installable status
+59 http fetch GET 200 https://registry.npmjs.org/x-xss-protection 44ms
+60 silly pacote version manifest for x-xss-protection@1.1.0 fetched in 47ms
+61 silly resolveWithNewModule x-xss-protection@1.1.0 checking installable status
+62 http fetch GET 200 https://registry.npmjs.org/platform 35ms
+63 http fetch GET 200 https://registry.npmjs.org/dasherize 36ms
+64 silly pacote version manifest for platform@1.3.5 fetched in 87ms
+65 silly resolveWithNewModule platform@1.3.5 checking installable status
+66 silly pacote version manifest for dasherize@2.0.0 fetched in 88ms
+67 silly resolveWithNewModule dasherize@2.0.0 checking installable status
+68 http fetch GET 200 https://registry.npmjs.org/content-security-policy-builder 90ms
+69 silly pacote version manifest for content-security-policy-builder@2.0.0 fetched in 92ms
+70 silly resolveWithNewModule content-security-policy-builder@2.0.0 checking installable status
+71 http fetch GET 200 https://registry.npmjs.org/camelize 138ms
+72 silly pacote version manifest for camelize@1.0.0 fetched in 141ms
+73 silly resolveWithNewModule camelize@1.0.0 checking installable status
+74 timing stage:loadIdealTree:loadAllDepsIntoIdealTree Completed in 359ms
+75 timing stage:loadIdealTree Completed in 365ms
+76 silly currentTree !invalid#2
+77 silly idealTree !invalid#1
+77 silly idealTree ├── camelize@1.0.0
+77 silly idealTree ├── content-security-policy-builder@2.0.0
+77 silly idealTree ├── dasherize@2.0.0
+77 silly idealTree ├── depd@2.0.0
+77 silly idealTree ├── dns-prefetch-control@0.1.0
+77 silly idealTree ├── dont-sniff-mimetype@1.0.0
+77 silly idealTree ├── expect-ct@0.2.0
+77 silly idealTree ├── feature-policy@0.3.0
+77 silly idealTree ├── frameguard@3.1.0
+77 silly idealTree ├── helmet-crossdomain@0.3.0
+77 silly idealTree ├── helmet-csp@2.7.1
+77 silly idealTree ├── helmet@3.18.0
+77 silly idealTree ├── hide-powered-by@1.0.0
+77 silly idealTree ├── hpkp@2.0.0
+77 silly idealTree ├── hsts@2.2.0
+77 silly idealTree ├── ienoopen@1.1.0
+77 silly idealTree ├── nocache@2.1.0
+77 silly idealTree ├── platform@1.3.5
+77 silly idealTree ├── referrer-policy@1.2.0
+77 silly idealTree └── x-xss-protection@1.1.0
+78 silly install generateActionsToTake
+79 warn checkPermissions Missing write access to /
+80 timing stage:rollbackFailedOptional Completed in 1ms
+81 timing stage:runTopLevelLifecycles Completed in 671ms
+82 silly saveTree !invalid#1
+82 silly saveTree └─┬ helmet@3.18.0
+82 silly saveTree   ├── depd@2.0.0
+82 silly saveTree   ├── dns-prefetch-control@0.1.0
+82 silly saveTree   ├── dont-sniff-mimetype@1.0.0
+82 silly saveTree   ├── expect-ct@0.2.0
+82 silly saveTree   ├── feature-policy@0.3.0
+82 silly saveTree   ├── frameguard@3.1.0
+82 silly saveTree   ├── helmet-crossdomain@0.3.0
+82 silly saveTree   ├─┬ helmet-csp@2.7.1
+82 silly saveTree   │ ├── camelize@1.0.0
+82 silly saveTree   │ ├── content-security-policy-builder@2.0.0
+82 silly saveTree   │ ├── dasherize@2.0.0
+82 silly saveTree   │ └── platform@1.3.5
+82 silly saveTree   ├── hide-powered-by@1.0.0
+82 silly saveTree   ├── hpkp@2.0.0
+82 silly saveTree   ├── hsts@2.2.0
+82 silly saveTree   ├── ienoopen@1.1.0
+82 silly saveTree   ├── nocache@2.1.0
+82 silly saveTree   ├── referrer-policy@1.2.0
+82 silly saveTree   └── x-xss-protection@1.1.0
+83 warn enoent ENOENT: no such file or directory, open '/package.json'
+84 verbose enoent This is related to npm not being able to find a file.
+85 warn !invalid#1 No description
+86 warn !invalid#1 No repository field.
+87 warn !invalid#1 No README data
+88 warn !invalid#1 No license field.
+89 verbose stack Error: EACCES: permission denied, access '/'
+90 verbose cwd /
+91 verbose Linux 4.15.0-1030-gcp
+92 verbose argv "/usr/bin/node" "/usr/bin/npm" "install" "--save" "helmet"
+93 verbose node v8.16.0
+94 verbose npm  v6.4.1
+95 error path /
+96 error code EACCES
+97 error errno -13
+98 error syscall access
+99 error Error: EACCES: permission denied, access '/'
+99 error  { Error: EACCES: permission denied, access '/'
+99 error   stack: 'Error: EACCES: permission denied, access \'/\'',
+99 error   errno: -13,
+99 error   code: 'EACCES',
+99 error   syscall: 'access',
+99 error   path: '/' }
+100 error The operation was rejected by your operating system.
+100 error It is likely you do not have the permissions to access this file as the current user
+100 error
+100 error If you believe this might be a permissions issue, please double-check the
+100 error permissions of the file and its containing directories, or try running
+100 error the command again as root/Administrator (though this is not recommended).
+101 verbose exit [ -13, true ]
