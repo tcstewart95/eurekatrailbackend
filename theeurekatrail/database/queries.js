@@ -13,8 +13,8 @@ const createAccount = function (username, password, hp, company_id, inventory_id
   client.query("INSERT INTO player (username, password, hp, company_id, inventory_id, role_id, image) VALUES ('"+username+"','"+password+"', "+hp+", "+company_id+", "+inventory_id+", "+role_id+", '"+image+"');"), function (err, result, fields) {
     if (err) console.log(err);
     var today = new Date().toDateString;
-    console.log("INSERT INTO plays_in (player_id, company_id, total_steps, start_date, end_date) VALUES ((SELECT id FROM player WHERE username = '"+username+"'),  "+company_id+", "+0+", "+today+", "+today+");");
-    client.query("INSERT INTO plays_in (player_id, company_id, total_steps, start_date, end_date) VALUES ((SELECT id FROM player WHERE username = '"+username+"'), "+company_id+", "+0+", "+today+", "+today+");"), function (err, result, fields) {
+    console.log("INSERT INTO plays_in (player_id, company_id, total_steps, start_date, end_date) VALUES ((SELECT id FROM player WHERE username = '"+username+"'), "+company_id+", 0, '"+today+"', '"+today+"');");
+    client.query("INSERT INTO plays_in (player_id, company_id, total_steps, start_date, end_date) VALUES ((SELECT id FROM player WHERE username = '"+username+"'), "+company_id+", 0, '"+today+"', '"+today+"');"), function (err, result, fields) {
       if (err) console.log(err);
       console.log("Account Created");
       return callback(true);
