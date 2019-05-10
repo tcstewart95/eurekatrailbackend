@@ -19,6 +19,7 @@ const createAccount = function (username, password, hp, company_id, inventory_id
       console.log("Account Created");
       return callback(true);
     };
+    return callback(false);
   };
 }
 
