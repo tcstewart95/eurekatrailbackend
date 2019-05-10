@@ -12,7 +12,7 @@ router.use(bodyParser())
 router.post('/create/user', (req, res) => {
     console.log(req.query);
     const { username, password, hp, company_id, inventory_id, role_id, image } = req.query
-    db.createAccount(username, password, hp, company_id, inventory_id, role_id, image, async function (data) {
+    db.createAccount(username, password, hp, company_id, inventory_id, role_id, image, function (data) {
         if (data) {
            res.status(201).send('user created')
         }
