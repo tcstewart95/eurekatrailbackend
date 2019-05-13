@@ -11,8 +11,8 @@ router.use(bodyParser())
 //call to create user
 router.post('/create/user', (req, res) => {
     console.log(req.query);
-    const { username, firstname, lastname, password, hp, company_id, inventory_id, role_id, image, authenticated, } = req.query
-    db.createAccount(username, firstname, lastname, password, hp, company_id, inventory_id, role_id, image, authenticated, function (data) {
+    const { fb_id, g_id, username, firstname, lastname, password, hp, company_id, inventory_id, role_id, image, authenticated, } = req.query
+    db.createAccount(fb_id, g_id, username, firstname, lastname, password, hp, company_id, inventory_id, role_id, image, authenticated, function (data) {
         if (data) {
            res.status(201).send('user created')
         }
