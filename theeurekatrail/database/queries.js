@@ -7,22 +7,36 @@ const client = mysql.createConnection({
   database: "the_eureka_trail"
 })
 
-//creates a new player account and joins them to a company. Make sure that if they are starting a new company to create that company first. For development's sake, I am manually adding the company to the database and testing under the condition that I know the company exists.
-const createAccount = function (fb_id, g_id, username, firstname, lastname, password, hp, company_id, inventory_id, role_id, image, authenticated, callback) {
-  console.log("INSERT INTO player (fb_id, g_id, username, firstname, lastname, password, hp, company_id, inventory_id, role_id, image, authenticated) VALUES ("+fb_id+", "+g_id+", '"+username+"', '"+firstname+"', '"+lastname+"', '"+password+"', "+hp+", "+company_id+", "+inventory_id+", "+role_id+", '"+image+"', "+authenticated+");");
-  client.query("INSERT INTO player (fb_id, g_id, username, firstname, lastname, password, hp, company_id, inventory_id, role_id, image, authenticated) VALUES ("+fb_id+", "+g_id+", '"+username+"','"+firstname+"', '"+lastname+"', '"+password+"', "+hp+", "+company_id+", "+inventory_id+", "+role_id+", '"+image+"', "+authenticated+");"), function (err, result, fields) {
+const checkexists = function (email) {
+  client.query("SELECT * FROM player WHERE email = '"+email+"'");
     if (err) console.log(err);
-    //var today = new Date();
-    //console.log("INSERT INTO plays_in (player_id, company_id, total_steps, start_date, end_date) VALUES ((SELECT id FROM player WHERE username = '"+username+"'), "+company_id+", 0, '"+today+"', '"+today+"');");
-    //client.query("INSERT INTO plays_in (player_id, company_id, total_steps, start_date, end_date) VALUES ((SELECT id FROM player WHERE username = '"+username+"'), "+company_id+", 0, '"+today+"', '"+today+"');"), function (err, result, fields) {
-      //if (err) console.log(err);
-      //console.log("Account Created");
     return callback(true);
-    //};
-    //return callback(false);
+}
+
+//creates a new player account and joins them to a company. Make sure that if they are starting a new company to create that company first. For development's sake, I am manually adding the company to the database and testing under the condition that I know the company exists.
+const createAccount = function (email, username, firstname, lastname, hp, company_id, inventory_id, role_id, image, authenticated, callback) {
+  client.query("INSERT INTO player (fb_id, g_id, username, firstname, lastname, password, hp, company_id, inventory_id, role_id, image, authenticated) VALUES ('"+email+"', '"+username+"','"+firstname+"', '"+lastname+"',"+hp+", "+company_id+", "+inventory_id+", "+role_id+", '"+image+"', "+authenticated+");"), function (err, result, fields) {
+    if (err) console.log(err);
+    return callback(true);
   };
 }
 
+const deleteUser = function (email) {
+  client.query("DELETE FROM player WHERE email = '"+email+"'");
+}
+
+const login = function (email) {
+  client.query("UPDATE player SET authenticated = 1 WHERE email = '"+email+"'");
+}
+
+const logout = function (email) {
+  client.query("UPDATE player SET authenticated = 0 WHERE email = '"+email+"'");
+}
+
 module.exports = {
- createAccount
+ checkexists,
+ createAccount,
+ deleteUser,
+ login,
+ logout
 }
