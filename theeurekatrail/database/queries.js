@@ -33,10 +33,15 @@ const logout = function (email) {
   client.query("UPDATE player SET authenticated = 0 WHERE email = '"+email+"'");
 }
 
+const getconversation = function (id) {
+  client.query("SELECT text FROM conversations WHERE id = "+id+";");
+}
+
 module.exports = {
  checkexists,
  createAccount,
  deleteUser,
  login,
- logout
+ logout,
+ getconversation
 }
