@@ -11,7 +11,7 @@ const client = mysql.createConnection({
 const checkexists = function (email) {
   client.query("SELECT * FROM player WHERE email = '"+email+"'"), function (err, result, fields) {
     if (err) console.log(err);
-    return callback(result);
+    return callback(true);
   };
 }
 
@@ -19,7 +19,7 @@ const checkexists = function (email) {
 const createAccount = function (email, firstname, lastname, hp, company_id, inventory_id, role_id, image, authenticated, callback) {
   client.query("INSERT INTO player (email, firstname, lastname, hp, company_id, inventory_id, role_id, image, authenticated) VALUES ('"+email+"', '"+firstname+"', '"+lastname+"', "+hp+", "+company_id+", "+inventory_id+", "+role_id+", '"+image+"', "+authenticated+");"), function (err, result, fields) {
     if (err) console.log(err);
-    return callback(result);
+    return callback(true);
   };
 }
 
