@@ -12,7 +12,7 @@ router.post('/user/checkexists', (req, res) => {
     const {email} = req.query
     db.checkexists(email, function(data) {
         if(data) {
-            res.status(201).send('user exists')
+            res.status(201).send(data)
         }
         else {
             res.status(218).send('unable to check if user exists')
