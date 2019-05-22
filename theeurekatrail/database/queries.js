@@ -8,7 +8,7 @@ const client = mysql.createConnection({
 })
 
 //Checks to see if a email already exists in our system before creating a new user account
-const checkexists = function (email) {
+const checkexists = function (email, callback) {
   client.query("SELECT * FROM player WHERE email = '"+email+"';", function (err, result, fields) {
     if (err) console.log(err);
     return callback(true);
