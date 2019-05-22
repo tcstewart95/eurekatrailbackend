@@ -11,7 +11,7 @@ const client = mysql.createConnection({
 const checkexists = function (email, callback) {
   client.query("SELECT * FROM player WHERE email = '"+email+"';", function (err, result, fields) {
     if (err) console.log(err);
-    return callback(true);
+    return callback(result);
   });
 }
 
