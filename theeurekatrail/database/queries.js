@@ -15,7 +15,7 @@ const checkexists = function (email) {
 
 //creates a new player account and joins them to a company. Make sure that if they are starting a new company to create that company first. For development's sake, I am manually adding the company to the database and testing under the condition that I know the company exists.
 const createAccount = function (email, firstname, lastname, hp, company_id, inventory_id, role_id, image, authenticated, callback) {
-  client.query("INSERT INTO player (email, firstname, lastname, hp, company_id, inventory_id, role_id, image, authenticated) VALUES ('"+email+"', '"+username+"','"+firstname+"', '"+lastname+"', "+hp+", "+company_id+", "+inventory_id+", "+role_id+", '"+image+"', "+authenticated+");"), function (err, result, fields) {
+  client.query("INSERT INTO player (email, firstname, lastname, hp, company_id, inventory_id, role_id, image, authenticated) VALUES ('"+email+"', '"+firstname+"', '"+lastname+"', "+hp+", "+company_id+", "+inventory_id+", "+role_id+", '"+image+"', "+authenticated+");"), function (err, result, fields) {
     if (err) console.log(err);
     return callback(true);
   };
