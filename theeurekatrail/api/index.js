@@ -9,7 +9,9 @@ const router = new Router()
 router.use(bodyParser())
 
 router.post('/user/checkexists', (req, res) => {
-    const {email} = req.query
+    const {email} = req.body
+    console.log('email stuff:');
+    console.log(req);
     db.checkexists(email, function(data) {
         if(data) {
             res.status(201).send(data)
@@ -21,7 +23,9 @@ router.post('/user/checkexists', (req, res) => {
 })
 
 router.post('/user/create', (req, res) => {
-    const {email, firstname, lastname, hp, company_id, inventory_id, role_id, image, authenticated} = req.query
+    console.log('email stuff:');
+    console.log(req);
+    const {email, firstname, lastname, hp, company_id, inventory_id, role_id, image, authenticated} = req.body
     db.createAccount(email, firstname, lastname, hp, company_id, inventory_id, role_id, image, authenticated, function (data) {
         if (data) {
            res.status(201).send('user created')
@@ -33,7 +37,7 @@ router.post('/user/create', (req, res) => {
 })
 
 router.post('/user/delete', (req, res) => {
-    const {email} = req.query
+    const {email} = req.body
     db.deleteUser(email, function(data) {
         if(data) {
             res.status(201).send('user deleted')
@@ -45,7 +49,7 @@ router.post('/user/delete', (req, res) => {
 })
 
 router.post('/user/login', (req, res) => {
-    const {email} = req.query
+    const {email} = req.body
     db.login(email, function(data) {
         if(data) {
             res.status(201).send('user logged in')
@@ -57,7 +61,7 @@ router.post('/user/login', (req, res) => {
 })
 
 router.post('/user/logout', (req, res) => {
-    const {email} = req.query
+    const {email} = req.body
     db.logout(email, function(data) {
         if(data) {
             res.status(201).send('user logged out')
