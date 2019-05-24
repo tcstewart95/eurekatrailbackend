@@ -23,18 +23,57 @@ const createAccount = function (email, firstname, lastname, hp, company_id, inve
   });
 }
 
+//needs callback
 const deleteUser = function (email) {
   client.query("DELETE FROM player WHERE email = '"+email+"'");
 }
 
+//needs callback
 const login = function (email) {
-  client.query("UPDATE player SET authenticated = 1 WHERE email = '"+email+"'");
+  client.query("UPDATE player SET authenticated = 1 WHERE email = '"+email+"';");
 }
 
+
+//needs update
 const logout = function (email) {
-  client.query("UPDATE player SET authenticated = 0 WHERE email = '"+email+"'");
+  client.query("UPDATE player SET authenticated = 0 WHERE email = '"+email+"';");
 }
 
+//needs testing
+const getID = function (email, callback) {
+  client.query("SELECT id FROM player WHERE email = '"+email+"';", function (err, result, fields) {
+    if (err) console.log(err);
+    return callback(result);
+  });
+}
+
+//needs testing
+const addRole = function (id, hp, inventoryId, roleId, callback) {
+  client.query("UPDATE player SET player SET hp = "+hp+", inventroy_id = "+inventoryId+", role_id = "+roldId+", WHERE id = "+id+";", function (err, result, fields) {
+    if (err) console.log(err);
+    return callback(result);
+  });
+}
+
+//needs testing
+const addPlayerInventory = function (player_id, callback) {
+  client.query("INSERT into inventory (caravan_id) VALUES (SELECT caravan_id FROM plays_in WHERE player_id = "+player_id+");", function (err, result, fields) {
+    if (err) {
+      console.log(err);
+    } else {
+      client.query("INSERT into has_inventory (player_id, caravan_id) VALUES ("+player_id+", (SELECT id from inventory WHERE caravan_id = (SELECT caravan_id FROM plays_in WHERE player_id = "+player_id+")))", function (err, result, fields) {
+        if (err) {
+          console.log(err);
+        } else {
+          return callback(result);
+        }
+      });
+      return callback(result);
+    }
+  });
+}
+
+//needs update
 const getconversation = function (id) {
   client.query("SELECT text FROM conversations WHERE id = "+id+";");
 }
@@ -45,5 +84,8 @@ module.exports = {
  deleteUser,
  login,
  logout,
+ getID,
+ addRole,
+ addPlayerInventory,
  getconversation
 }

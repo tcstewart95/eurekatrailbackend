@@ -10,8 +10,6 @@ router.use(bodyParser())
 
 router.post('/user/checkexists', (req, res) => {
     const {email} = req.body
-    console.log('email stuff:');
-    console.log(req);
     db.checkexists(email, function(data) {
         if(data) {
             res.status(201).send(data)
@@ -23,8 +21,6 @@ router.post('/user/checkexists', (req, res) => {
 })
 
 router.post('/user/create', (req, res) => {
-    console.log('email stuff:');
-    console.log(req);
     const {email, firstname, lastname, hp, company_id, inventory_id, role_id, image, authenticated} = req.body
     db.createAccount(email, firstname, lastname, hp, company_id, inventory_id, role_id, image, authenticated, function (data) {
         if (data) {
@@ -71,5 +67,50 @@ router.post('/user/logout', (req, res) => {
         }
     })  
 })
+
+
+
+
+//complete but needs testing
+router.post('/user/getID', (req, res) => {
+    const {email} = req.body
+    db.getID(email, function(data) {
+        if(data) {
+            res.status(201).send('user id retrieved')
+        }
+        else {
+            res.status(218).send('unable to retrieve user id')
+        }
+    })  
+})
+
+//needs update
+router.post('/user/add/role', (req, res) => {
+    const {id, hp, inventoryId, roleId} = req.body
+    db.addRole(id, hp, inventoryId, roleId, function(data) {
+        if(data) {
+            res.status(201).send('user logged out')
+        }
+        else {
+            res.status(218).send('unable to logout user')
+        }
+    })  
+})
+
+//needs testing
+router.post('/inventory/addPlayer', (req, res) => {
+    const {player_id} = req.body
+    db.addPlayerInventory(player_id, function(data) {
+        if(data) {
+            res.status(201).send('user logged out')
+        }
+        else {
+            res.status(218).send('unable to logout user')
+        }
+    })  
+})
+
+
+
 
 module.exports = router
