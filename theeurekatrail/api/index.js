@@ -21,8 +21,8 @@ router.post('/user/checkexists', (req, res) => {
 })
 
 router.post('/user/create', (req, res) => {
-    const {email, firstname, lastname, hp, company_id, inventory_id, image, authenticated} = req.body
-    db.createAccount(email, firstname, lastname, hp, company_id, inventory_id, image, authenticated, function (data) {
+    const {email, firstname, lastname, hp, company_id, image, authenticated} = req.body
+    db.createAccount(email, firstname, lastname, hp, company_id, image, authenticated, function (data) {
         if (data) {
            res.status(201).send('user created')
         }
@@ -86,8 +86,8 @@ router.post('/user/getID', (req, res) => {
 
 //needs update
 router.post('/user/add/role', (req, res) => {
-    const {id, hp, inventoryId, roleId} = req.body
-    db.addRole(id, hp, inventoryId, roleId, function(data) {
+    const {id, hp, roleId} = req.body
+    db.addRole(id, hp, roleId, function(data) {
         if(data) {
             res.status(201).send('user role added')
         }
