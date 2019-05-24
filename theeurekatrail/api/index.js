@@ -113,8 +113,8 @@ router.post('/inventory/addPlayer', (req, res) => {
 
 
 router.post('/inventory/checkExist', (req, res) => {
-    const {playerId} = req.body
-    db.checkinventoryexists(playerId, function(data) {
+    const {player_id} = req.body
+    db.checkinventoryexists(player_id, function(data) {
         if(data) {
             res.status(201).send(data)
         }
