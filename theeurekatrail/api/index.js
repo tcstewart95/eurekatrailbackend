@@ -112,5 +112,17 @@ router.post('/inventory/addPlayer', (req, res) => {
 
 
 
+router.post('/inventory/checkExist', (req, res) => {
+    const {playerId} = req.body
+    db.checkinventoryexists(playerId, function(data) {
+        if(data) {
+            res.status(201).send(data)
+        }
+        else {
+            res.status(218).send('unable to add inventory to user')
+        }
+    })  
+})
+
 
 module.exports = router

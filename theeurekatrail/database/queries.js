@@ -64,6 +64,13 @@ const addRole = function (id, hp, roleId, callback) {
   });
 }
 
+const checkinventoryexists = function (player_id, callback) {
+  client.query("SELECT inventory_id FROM has_inventory WHERE player_id = '"+player_id+"';", function (err, result, fields) {
+    if (err) console.log(err);
+    return callback(result);
+  });
+}
+
 //needs testing
 const addPlayerInventory = function (player_id, callback) {
   client.query("INSERT into inventory (caravan_id) VALUES ((SELECT caravan_id FROM plays_in WHERE player_id = "+player_id+"));", function (err, result, fields) {
@@ -94,6 +101,7 @@ module.exports = {
  logout,
  getID,
  addRole,
+ checkinventoryexists,
  addPlayerInventory,
  getconversation
 }
