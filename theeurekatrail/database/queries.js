@@ -49,36 +49,34 @@ const getID = function (email, callback) {
 
 //needs testing
 const addRole = function (id, hp, inventoryId, roleId, callback) {
-  client.query("UPDATE player SET player SET hp = "+hp+", inventroy_id = "+inventoryId+" WHERE id = "+id+";", function (err, result, fields) {
+  client.query("UPDATE player SET hp = "+hp+", inventory_id = "+inventoryId+" WHERE id = "+id+";", function (err, result, fields) {
     if (err) {
       console.log(err);
     } else {
-      client.query("Update plays_in SET role_id = "+roleid+" WHERE player_id = "+id+";", function (err, result, fields) {
+      client.query("Update plays_in SET role_id = "+roleId+" WHERE player_id = "+id+";", function (err, result, fields) {
         if (err) {
           console.log(err);
         } else {
           return callback(result);
         }
       });
-      return callback(result);
     }
   });
 }
 
 //needs testing
 const addPlayerInventory = function (player_id, callback) {
-  client.query("INSERT into inventory (caravan_id) VALUES (SELECT caravan_id FROM plays_in WHERE player_id = "+player_id+");", function (err, result, fields) {
+  client.query("INSERT into inventory (caravan_id) VALUES ((SELECT caravan_id FROM plays_in WHERE player_id = "+player_id+"));", function (err, result, fields) {
     if (err) {
       console.log(err);
     } else {
-      client.query("INSERT into has_inventory (player_id, caravan_id) VALUES ("+player_id+", (SELECT id from inventory WHERE caravan_id = (SELECT caravan_id FROM plays_in WHERE player_id = "+player_id+")))", function (err, result, fields) {
+      client.query("INSERT into has_inventory (player_id, inventory_id) VALUES ("+player_id+", (SELECT id from inventory WHERE caravan_id = (SELECT caravan_id FROM plays_in WHERE player_id = "+player_id+")))", function (err, result, fields) {
         if (err) {
           console.log(err);
         } else {
           return callback(result);
         }
       });
-      return callback(result);
     }
   });
 }

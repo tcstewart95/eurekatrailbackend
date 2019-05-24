@@ -76,7 +76,7 @@ router.post('/user/getID', (req, res) => {
     const {email} = req.body
     db.getID(email, function(data) {
         if(data) {
-            res.status(201).send('user id retrieved')
+            res.status(201).send(data)
         }
         else {
             res.status(218).send('unable to retrieve user id')
@@ -89,10 +89,10 @@ router.post('/user/add/role', (req, res) => {
     const {id, hp, inventoryId, roleId} = req.body
     db.addRole(id, hp, inventoryId, roleId, function(data) {
         if(data) {
-            res.status(201).send('user logged out')
+            res.status(201).send('user role added')
         }
         else {
-            res.status(218).send('unable to logout user')
+            res.status(218).send('unable to add user role')
         }
     })  
 })
@@ -102,10 +102,10 @@ router.post('/inventory/addPlayer', (req, res) => {
     const {player_id} = req.body
     db.addPlayerInventory(player_id, function(data) {
         if(data) {
-            res.status(201).send('user logged out')
+            res.status(201).send(data)
         }
         else {
-            res.status(218).send('unable to logout user')
+            res.status(218).send('unable to add inventory to user')
         }
     })  
 })
