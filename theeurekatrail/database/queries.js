@@ -50,8 +50,18 @@ const getID = function (email, callback) {
 //needs testing
 const addRole = function (id, hp, inventoryId, roleId, callback) {
   client.query("UPDATE player SET player SET hp = "+hp+", inventroy_id = "+inventoryId+" WHERE id = "+id+";", function (err, result, fields) {
-    if (err) console.log(err);
-    return callback(result);
+    if (err) {
+      console.log(err);
+    } else {
+      client.query("Update plays_in SET role_id = "+roleid+" WHERE player_id = "+id+";", function (err, result, fields) {
+        if (err) {
+          console.log(err);
+        } else {
+          return callback(result);
+        }
+      });
+      return callback(result);
+    }
   });
 }
 
