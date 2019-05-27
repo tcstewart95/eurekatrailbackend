@@ -94,7 +94,7 @@ const getconversation = function (id) {
 }
 
 //creates a new caravan.
-const createAccount = function (name, player_id, feed_id, inventory_id, location_id, image_path, public, callback) {
+const createCaravan = function (name, player_id, feed_id, inventory_id, location_id, image_path, public, callback) {
   client.query("INSERT INTO caravan (name, player_id, feed_id, inventory_id, location_id, image_path, public) VALUES ('"+name+"', '"+player_id+"', '"+feed_id+"', '"+inventory_id+"', "+location_id+", "+image_path+", '"+public+"');", function (err, result, fields) {
     if (err) console.log(err);
     return callback(true);
@@ -111,5 +111,6 @@ module.exports = {
  addRole,
  checkinventoryexists,
  addPlayerInventory,
- getconversation
+ getconversation,
+ createCaravan
 }
