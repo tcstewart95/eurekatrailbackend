@@ -125,4 +125,16 @@ router.post('/inventory/checkExist', (req, res) => {
 })
 
 
+router.post('/caravan', (req, res) => {
+    const {name, player_id, feed_id, inventory_id, location_id, image_path, public} = req.body
+    db.createCaravan(name, player_id, feed_id, inventory_id, location_id, image_path, public, function (data) {
+        if (data) 
+            res.status(201).send('caravan created')
+            
+        else
+            res.status(218).send('unable to create caravan')
+    })
+})
+
+
 module.exports = router
