@@ -111,7 +111,7 @@ const getCaravanId = function(email, callback) {
 
 //gets members of caravan in order of enrollment
 const selectCaravan = function(caravan_id, callback) {
-  client.query("SELECT firstname, lastname FROM player p, plays_in pi WHERE p.id = pi.player_id AND pi.caravan_id = "+caravan_id+";", function (err, result, fields) {
+  client.query("SELECT id, firstname, lastname FROM player p, plays_in pi WHERE p.id = pi.player_id AND pi.caravan_id = "+caravan_id+";", function (err, result, fields) {
     if (err) console.log(err);
     return callback(result);
   })
