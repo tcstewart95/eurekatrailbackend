@@ -119,7 +119,7 @@ const selectCaravan = function(caravan_id, callback) {
 
 //Gets role of caravan members in order of enrollment
 const getCaravanMemberRoles = function(caravan_id, callback) {
-  client.query("SELECT role_id, FROM plays_in WHERE caravan_id = "+caravan_id+";", function (err, result, fields) {
+  client.query("SELECT role_id FROM plays_in WHERE caravan_id = "+caravan_id+";", function (err, result, fields) {
     if (err) console.log(err);
     return callback(result);
   })
