@@ -16,8 +16,8 @@ const checkexists = function (email, callback) {
 }
 
 //creates a new player account and joins them to a company. Make sure that if they are starting a new company to create that company first. For development's sake, I am manually adding the company to the database and testing under the condition that I know the company exists.
-const createAccount = function (email, firstname, lastname, hp, company_id, image, authenticated, callback) {
-  client.query("INSERT INTO player (email, firstname, lastname, hp, company_id, image, authenticated) VALUES ('"+email+"', '"+firstname+"', '"+lastname+"', "+hp+", "+company_id+", '"+image+"', "+authenticated+");", function (err, result, fields) {
+const createAccount = function (email, firstname, lastname, hp, caravan_id, image, authenticated, callback) {
+  client.query("INSERT INTO player (email, firstname, lastname, hp, caravan_id, image, authenticated) VALUES ('"+email+"', '"+firstname+"', '"+lastname+"', "+hp+", "+caravan_id+", '"+image+"', "+authenticated+");", function (err, result, fields) {
     if (err) console.log(err);
     return callback(true);
   });
@@ -94,11 +94,47 @@ const getconversation = function (id) {
 }
 
 //creates a new caravan.
-const createCaravan = function (name, player_id, feed_id, inventory_id, location_id, image_path, public, callback) {
-  client.query("INSERT INTO caravan (name, player_id, feed_id, inventory_id, location_id, image_path, public) VALUES ('"+name+"', '"+player_id+"', '"+feed_id+"', '"+inventory_id+"', "+location_id+", '"+image_path+"', "+public+");", function (err, result, fields) {
+const createCaravan = function (name, feed_id, inventory_id, location_id, image_path, public, callback) {
+  client.query("INSERT INTO caravan (name, feed_id, inventory_id, location_id, image_path, public) VALUES ('"+name+"', '"+feed_id+"', '"+inventory_id+"', "+location_id+", '"+image_path+"', "+public+");", function (err, result, fields) {
     if (err) console.log(err);
     return callback(true);
   });
+}
+
+//gets ID of caravan
+const getCaravanId = function(email, callback) {
+  client.query("SELECT caravan_id FROM  plays_in WHERE player_id = (SELECT id FROM player WHERE email = '"+email+"');", function (err, result, fields) {
+    if(err) {
+      console.log(err)
+    } else {
+      client.query()
+      return callback(result);
+    }
+  })
+}
+
+//gets members of caravan in order of enrollment
+const selectCaravan = function(caravan_id, callback) {
+  client.query("SELECT firstname, lastname FROM player p, plays_in pi WHERE p.id = pi.player_id AND pi.caravan_id = "+caravan_id+";", function (err, result, fields) {
+    if(err) {
+      console.log(err)
+    } else {
+      client.query()
+      return callback(result);
+    }
+  })
+}
+
+//Gets role of caravan members in order of enrollment
+const getCaravanMemberRoles = function(caravan_id, callback) {
+  client.query("SELECT role_id, FROM plays_in WHERE caravan_id = "+caravan_id+";", function (err, result, fields) {
+    if(err) {
+      console.log(err)
+    } else {
+      client.query()
+      return callback(result);
+    }
+  })
 }
 
 module.exports = {
@@ -112,5 +148,8 @@ module.exports = {
  checkinventoryexists,
  addPlayerInventory,
  getconversation,
- createCaravan
+ createCaravan,
+ getCaravanId,
+ selectCaravan,
+ getCaravanMemberRoles
 }
