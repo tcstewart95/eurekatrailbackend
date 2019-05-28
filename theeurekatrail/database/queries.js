@@ -104,36 +104,24 @@ const createCaravan = function (name, feed_id, inventory_id, location_id, image_
 //gets ID of caravan
 const getCaravanId = function(email, callback) {
   client.query("SELECT caravan_id FROM  plays_in WHERE player_id = (SELECT id FROM player WHERE email = '"+email+"');", function (err, result, fields) {
-    if(err) {
-      console.log(err)
-    } else {
-      client.query()
-      return callback(result);
-    }
+    if (err) console.log(err);
+    return callback(result);
   })
 }
 
 //gets members of caravan in order of enrollment
 const selectCaravan = function(caravan_id, callback) {
   client.query("SELECT firstname, lastname FROM player p, plays_in pi WHERE p.id = pi.player_id AND pi.caravan_id = "+caravan_id+";", function (err, result, fields) {
-    if(err) {
-      console.log(err)
-    } else {
-      client.query()
-      return callback(result);
-    }
+    if (err) console.log(err);
+    return callback(result);
   })
 }
 
 //Gets role of caravan members in order of enrollment
 const getCaravanMemberRoles = function(caravan_id, callback) {
   client.query("SELECT role_id, FROM plays_in WHERE caravan_id = "+caravan_id+";", function (err, result, fields) {
-    if(err) {
-      console.log(err)
-    } else {
-      client.query()
-      return callback(result);
-    }
+    if (err) console.log(err);
+    return callback(result);
   })
 }
 
