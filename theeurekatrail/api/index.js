@@ -146,6 +146,19 @@ router.post('/caravan/getId', (req, res) => {
 })
 
 
+router.post('/caravan/checkOwner', (req, res) => {
+    const {player_id, caravan_id} = req.body
+    db.checkCaravanOwner(player_id, caravan_id, function (data) {
+        if (data) {
+            res.status(201).send(data)
+        } 
+        else {
+            res.status(201).send('Unable to get caravan members')
+        } 
+    })
+})
+
+
 router.post('/caravan/getMembers', (req, res) => {
     const {caravan_id} = req.body
     db.selectCaravan(caravan_id, function (data) {

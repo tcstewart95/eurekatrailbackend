@@ -109,6 +109,14 @@ const getCaravanId = function(email, callback) {
   })
 }
 
+//checks if player is the owner of the caravan, and if it is launched
+const checkCaravanOnwer = function(player_id, caravan_id, callback) {
+  client.query("SELECT launched FROM caravan WHERE owner_id = "+player_id+" AND id = "+caravan_id+";", function (err, result, fields) {
+    if (err) console.log(err);
+    return callback(result);
+  })
+}
+
 //gets members of caravan in order of enrollment
 const selectCaravan = function(caravan_id, callback) {
   client.query("SELECT id, firstname, lastname FROM player p, plays_in pi WHERE p.id = pi.player_id AND pi.caravan_id = "+caravan_id+";", function (err, result, fields) {
@@ -138,6 +146,7 @@ module.exports = {
  getconversation,
  createCaravan,
  getCaravanId,
+ checkCaravanOwner,
  selectCaravan,
  getCaravanMemberRoles
 }
