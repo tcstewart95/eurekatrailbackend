@@ -153,11 +153,34 @@ router.post('/caravan/checkOwner', (req, res) => {
             res.status(201).send(data)
         } 
         else {
-            res.status(201).send('Unable to get caravan members')
+            res.status(201).send('Unable to get caravan owner')
         } 
     })
 })
 
+router.post('/caravan/checkLaunched', (req, res) => {
+    const {caravan_id} = req.body
+    db.checkCaravanLaunched(caravan_id, function (data) {
+        if (data) {
+            res.status(201).send(data)
+        } 
+        else {
+            res.status(201).send('Unable to get caravan launch status')
+        } 
+    })
+})
+
+router.post('/caravan/launch', (req, res) => {
+    const {caravan_id} = req.body
+    db.laucnhCaravan(caravan_id, function (data) {
+        if (data) {
+            res.status(201).send('Caravan launched')
+        } 
+        else {
+            res.status(201).send('Unable to launch caravan')
+        } 
+    })
+})
 
 router.post('/caravan/getMembers', (req, res) => {
     const {caravan_id} = req.body
