@@ -149,6 +149,14 @@ const getCaravanMemberRoles = function(caravan_id, callback) {
   })
 }
 
+//Gets total number of steps taken in a caravan as of midnight today
+const getCaravanSteps = function(caravan_id, callback) {
+  client.query("SELECT SUM(steps) FROM steps WHERE id = (SELECT step_record_id FROM has_steps WHERE caravan_id = "+caravan_id+") AND time_stamp >= (cast(CURRENT_TIMESTAMP-6 as date));", function (err, result, fields) {
+    if (err) console.log(err);
+    return callback(result);
+  })
+}
+
 module.exports = {
  checkexists,
  createAccount,
@@ -166,5 +174,6 @@ module.exports = {
  checkCaravanLaunched,
  laucnhCaravan,
  selectCaravan,
- getCaravanMemberRoles
+ getCaravanMemberRoles,
+ getCaravanSteps
 }

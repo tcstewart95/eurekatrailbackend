@@ -207,5 +207,16 @@ router.post('/caravan/getRoles', (req, res) => {
     })
 })
 
+router.post('/caravan/getSteps', (req, res) => {
+    const {caravan_id} = req.body
+    db.getCaravanSteps(caravan_id, function(data) {
+        if (data) {
+            res.status(201).send(data)
+        } 
+        else {
+            res.status(201).send('Unable to get caravan total steps')
+        } 
+    })
+})
 
 module.exports = router
