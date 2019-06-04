@@ -109,6 +109,14 @@ const createCaravan = function (name, owner_id, private, callback) {
   });
 }
 
+//adds a player to a caravan.
+const joinCaravan = function (player_id, caravan_id) {
+  client.query("INSERT INTO plays_in (player_id, caravan_id, role_id, total_steps, start_date, end_date) VALUES ("+player_id+", "+caravan_id+", '', 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);", function (err, result, fields) {
+    if (err) console.log(err);
+    return callback(true);
+  });
+}
+
 //gets ID of caravan
 const getCaravanId = function(email, callback) {
   client.query("SELECT caravan_id FROM  plays_in WHERE player_id = (SELECT id FROM player WHERE email = '"+email+"');", function (err, result, fields) {
@@ -186,6 +194,7 @@ module.exports = {
  getconversation,
  checkCaravanExists,
  createCaravan,
+ joinCaravan,
  getCaravanId,
  checkCaravanOwner,
  checkCaravanLaunched,

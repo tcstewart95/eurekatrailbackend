@@ -128,7 +128,7 @@ router.post('/caravan/checkExists', (req, res) => {
             res.status(201).send(data)
         } 
         else {
-            res.status(201).send('Unable to check if caravan name is in use')
+            res.status(218).send('Unable to check if caravan name is in use')
         } 
     })
 })
@@ -153,11 +153,23 @@ router.post('/caravan/getId', (req, res) => {
             res.status(201).send(data)
         } 
         else {
-            res.status(201).send('Unable to get caravan members')
+            res.status(218).send('Unable to get caravan members')
         } 
     })
 })
 
+
+router.post('/caravan/join', (req, res) => {
+    const {player_id, caravan_id} = req.body
+    db.joinCaravan(player_id, caravan_id, function (data) {
+        if (data) {
+            res.status(201).send('Joined caravan')
+        } 
+        else {
+            res.status(218).send('Unable to join caravan')
+        } 
+    })
+})
 
 router.post('/caravan/checkOwner', (req, res) => {
     const {player_id, caravan_id} = req.body
@@ -166,7 +178,7 @@ router.post('/caravan/checkOwner', (req, res) => {
             res.status(201).send(data)
         } 
         else {
-            res.status(201).send('Unable to get caravan owner')
+            res.status(218).send('Unable to get caravan owner')
         } 
     })
 })
@@ -179,7 +191,7 @@ router.post('/caravan/checkLaunched', (req, res) => {
             res.status(201).send(data)
         } 
         else {
-            res.status(201).send('Unable to get caravan launch status')
+            res.status(218).send('Unable to get caravan launch status')
         } 
     })
 })
@@ -192,7 +204,7 @@ router.post('/caravan/launch', (req, res) => {
             res.status(201).send('Caravan launched')
         } 
         else {
-            res.status(201).send('Unable to launch caravan')
+            res.status(218).send('Unable to launch caravan')
         } 
     })
 })
@@ -205,7 +217,7 @@ router.post('/caravan/getMembers', (req, res) => {
             res.status(201).send(data)
         } 
         else {
-            res.status(201).send('Unable to get caravan members')
+            res.status(218).send('Unable to get caravan members')
         } 
     })
 })
@@ -218,7 +230,7 @@ router.post('/caravan/getRoles', (req, res) => {
             res.status(201).send(data)
         } 
         else {
-            res.status(201).send('Unable to get caravan member roles')
+            res.status(218).send('Unable to get caravan member roles')
         } 
     })
 })
@@ -231,7 +243,7 @@ router.post('/caravan/getSteps', (req, res) => {
             res.status(201).send(data)
         } 
         else {
-            res.status(201).send('Unable to get caravan total steps')
+            res.status(218).send('Unable to get caravan total steps')
         } 
     })
 })
@@ -248,7 +260,7 @@ router.post('/steps/add', (req, res) => {
             res.status(201).send(data)
         } 
         else {
-            res.status(201).send('Unable to get caravan members')
+            res.status(218).send('Unable to record steps')
         } 
     })
 })
@@ -260,7 +272,7 @@ router.post('/steps/getCaravanSteps', (req, res) => {
             res.status(201).send(data)
         } 
         else {
-            res.status(201).send('Unable to get caravan members')
+            res.status(218).send('Unable to get caravan members steps')
         } 
     })
 })
