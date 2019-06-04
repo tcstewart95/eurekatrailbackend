@@ -93,9 +93,17 @@ const getconversation = function (id) {
   client.query("SELECT text FROM conversations WHERE id = "+id+";");
 }
 
+//checks if a caravan name is already in use
+const checkCaravanExists = function (name, callback) {
+  client.query("SELECT * FROM caravan WHERE name = '"+name+"';", function (err, result, fields) {
+    if (err) console.log(err);
+    return callback(result);
+  });
+}
+
 //creates a new caravan.
-const createCaravan = function (name, feed_id, inventory_id, location_id, image_path, public, callback) {
-  client.query("INSERT INTO caravan (name, feed_id, inventory_id, location_id, image_path, public) VALUES ('"+name+"', '"+feed_id+"', '"+inventory_id+"', "+location_id+", '"+image_path+"', "+public+");", function (err, result, fields) {
+const createCaravan = function (name, owner_id, private, callback) {
+  client.query("INSERT INTO caravan (name, location_id, image, launched, owner_id, private) VALUES ('"+name+"', 0, 'graphics/role5.png', 0, "+owner_id+", "+private+");", function (err, result, fields) {
     if (err) console.log(err);
     return callback(true);
   });
@@ -149,6 +157,14 @@ const getCaravanMemberRoles = function(caravan_id, callback) {
   })
 }
 
+//Adds a new record of steps for a player
+const addPlayerSteps = function(steps, callback) {
+  client.query("INSERT INTO steps ...............SUM(steps) FROM steps WHERE id = (SELECT step_record_id FROM has_steps WHERE caravan_id = "+caravan_id+") AND time_stamp >= (cast(CURRENT_TIMESTAMP-6 as date));", function (err, result, fields) {
+    if (err) console.log(err);
+    return callback(result);
+  })
+}
+
 //Gets total number of steps taken in a caravan as of midnight today
 const getCaravanSteps = function(caravan_id, callback) {
   client.query("SELECT SUM(steps) FROM steps WHERE id = (SELECT step_record_id FROM has_steps WHERE caravan_id = "+caravan_id+") AND time_stamp >= (cast(CURRENT_TIMESTAMP-6 as date));", function (err, result, fields) {
@@ -168,6 +184,7 @@ module.exports = {
  checkinventoryexists,
  addPlayerInventory,
  getconversation,
+ checkCaravanExists,
  createCaravan,
  getCaravanId,
  checkCaravanOwner,
@@ -175,5 +192,6 @@ module.exports = {
  laucnhCaravan,
  selectCaravan,
  getCaravanMemberRoles,
+ addPlayerSteps,
  getCaravanSteps
 }

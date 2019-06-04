@@ -121,9 +121,22 @@ router.post('/inventory/checkExist', (req, res) => {
 })
 
 
-router.post('/caravan', (req, res) => {
-    const {name, feed_id, inventory_id, location_id, image_path, public} = req.body
-    db.createCaravan(name, feed_id, inventory_id, location_id, image_path, public, function (data) {
+router.post('/caravan/checkExists', (req, res) => {
+    const {name} = req.body
+    db.checkCaravanExists(name, function (data) {
+        if (data) {
+            res.status(201).send(data)
+        } 
+        else {
+            res.status(201).send('Unable to check if caravan name is in use')
+        } 
+    })
+})
+
+
+router.post('/caravan/create', (req, res) => {
+    const {name, owner_id, private} = req.body
+    db.createCaravan(name, owner_id, private, function (data) {
         if (data) 
             res.status(201).send('caravan created')
             
@@ -158,6 +171,7 @@ router.post('/caravan/checkOwner', (req, res) => {
     })
 })
 
+
 router.post('/caravan/checkLaunched', (req, res) => {
     const {caravan_id} = req.body
     db.checkCaravanLaunched(caravan_id, function (data) {
@@ -170,6 +184,7 @@ router.post('/caravan/checkLaunched', (req, res) => {
     })
 })
 
+
 router.post('/caravan/launch', (req, res) => {
     const {caravan_id} = req.body
     db.laucnhCaravan(caravan_id, function (data) {
@@ -181,6 +196,7 @@ router.post('/caravan/launch', (req, res) => {
         } 
     })
 })
+
 
 router.post('/caravan/getMembers', (req, res) => {
     const {caravan_id} = req.body
@@ -207,6 +223,7 @@ router.post('/caravan/getRoles', (req, res) => {
     })
 })
 
+
 router.post('/caravan/getSteps', (req, res) => {
     const {caravan_id} = req.body
     db.getCaravanSteps(caravan_id, function(data) {
@@ -215,6 +232,35 @@ router.post('/caravan/getSteps', (req, res) => {
         } 
         else {
             res.status(201).send('Unable to get caravan total steps')
+        } 
+    })
+})
+
+
+
+
+
+
+router.post('/steps/add', (req, res) => {
+    const {steps} = req.body
+    db.addSteps(steps, function (data) {
+        if (data) {
+            res.status(201).send(data)
+        } 
+        else {
+            res.status(201).send('Unable to get caravan members')
+        } 
+    })
+})
+
+router.post('/steps/getCaravanSteps', (req, res) => {
+    const {caravan_id} = req.body
+    db.getCaravanSteps(caravan_id, function (data) {
+        if (data) {
+            res.status(201).send(data)
+        } 
+        else {
+            res.status(201).send('Unable to get caravan members')
         } 
     })
 })
