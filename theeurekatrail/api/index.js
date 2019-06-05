@@ -122,23 +122,23 @@ router.post('/inventory/checkExist', (req, res) => {
 
 
 router.post('/caravan/checkExists', (req, res) => {
-    const {name} = req.body
-    db.checkCaravanExists(name, function (data) {
+    const {join_code} = req.body
+    db.checkCaravanExists(join_code, function (data) {
         if (data) {
             res.status(201).send(data)
         } 
         else {
-            res.status(218).send('Unable to check if caravan name is in use')
+            res.status(218).send('Unable to check if caravan code is in use')
         } 
     })
 })
 
 
 router.post('/caravan/create', (req, res) => {
-    const {name, owner_id, private} = req.body
-    db.createCaravan(name, owner_id, private, function (data) {
+    const {name, owner_id, private, join_code} = req.body
+    db.createCaravan(name, owner_id, private, join_code, function (data) {
         if (data) 
-            res.status(201).send('caravan created')
+            res.status(201).send(data)
             
         else
             res.status(218).send('unable to create caravan')

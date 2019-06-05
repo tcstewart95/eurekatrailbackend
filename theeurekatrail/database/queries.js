@@ -94,16 +94,16 @@ const getconversation = function (id) {
 }
 
 //checks if a caravan name is already in use
-const checkCaravanExists = function (name, callback) {
-  client.query("SELECT * FROM caravan WHERE name = '"+name+"';", function (err, result, fields) {
+const checkCaravanExists = function (join_code, callback) {
+  client.query("SELECT id FROM caravan WHERE join_code = '"+join_code+"';", function (err, result, fields) {
     if (err) console.log(err);
     return callback(result);
   });
 }
 
 //creates a new caravan.
-const createCaravan = function (name, owner_id, private, callback) {
-  client.query("INSERT INTO caravan (name, location_id, image, launched, owner_id, private) VALUES ('"+name+"', 0, 'graphics/role5.png', 0, "+owner_id+", "+private+");", function (err, result, fields) {
+const createCaravan = function (name, owner_id, private, join_code, callback) {
+  client.query("INSERT INTO caravan (name, location_id, image, launched, owner_id, private, join_code) VALUES ('"+name+"', 0, 'graphics/role5.png', 0, "+owner_id+", "+private+", '"+join_code+"');", function (err, result, fields) {
     if (err) console.log(err);
     return callback(true);
   });
