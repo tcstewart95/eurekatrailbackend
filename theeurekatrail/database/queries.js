@@ -135,6 +135,14 @@ const getCaravanId = function(email, callback) {
   })
 }
 
+//gets all IDs, names, of public caravans
+const  getPublicCaravans = function() {
+  client.query("SELECT id, name FROM Caravan WHERE private = 0;", function (err, result, fields) {
+    if (err) console.log(err);
+    return callback(result);
+  })
+}
+
 //checks if player is the owner of the caravan, and if it is launched
 const checkCaravanOwner = function(player_id, caravan_id, callback) {
   client.query("SELECT launched FROM caravan WHERE owner_id = "+player_id+" AND id = "+caravan_id+";", function (err, result, fields) {
@@ -152,7 +160,7 @@ const checkCaravanLaunched = function(caravan_id, callback) {
 }
 
 //updates caravan, sets launched to 1
-const laucnhCaravan = function(caravan_id, callback) {
+const launchCaravan = function(caravan_id, callback) {
   client.query("UPDATE caravan SET launched = 1 WHERE id = "+caravan_id+";", function (err, result, fields) {
     if (err) console.log(err);
     return callback(result);
@@ -206,9 +214,10 @@ module.exports = {
  createCaravan,
  joinCaravan,
  getCaravanId,
+ getPublicCaravans,
  checkCaravanOwner,
  checkCaravanLaunched,
- laucnhCaravan,
+ launchCaravan,
  selectCaravan,
  getCaravanMemberRoles,
  addPlayerSteps,

@@ -184,6 +184,18 @@ router.post('/caravan/checkOwner', (req, res) => {
 })
 
 
+router.post('/caravan/getPublic', (req, res) => {
+    db.getCaravanMemberRoles(function(data) {
+        if (data) {
+            res.status(201).send(data)
+        } 
+        else {
+            res.status(218).send('Unable to get public caravans')
+        } 
+    })
+})
+
+
 router.post('/caravan/checkLaunched', (req, res) => {
     const {caravan_id} = req.body
     db.checkCaravanLaunched(caravan_id, function (data) {
@@ -199,7 +211,7 @@ router.post('/caravan/checkLaunched', (req, res) => {
 
 router.post('/caravan/launch', (req, res) => {
     const {caravan_id} = req.body
-    db.laucnhCaravan(caravan_id, function (data) {
+    db.launchCaravan(caravan_id, function (data) {
         if (data) {
             res.status(201).send('Caravan launched')
         } 
