@@ -121,7 +121,7 @@ const createCaravan = function (name, owner_id, private, join_code, callback) {
 
 //adds a player to a caravan.
 const joinCaravan = function (player_id, caravan_id, callback) {
-  client.query("INSERT INTO plays_in (player_id, caravan_id, role_id, total_steps, start_date, end_date) VALUES ("+player_id+", "+caravan_id+", 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);", function (err, result, fields) {
+  client.query("INSERT INTO plays_in (player_id, caravan_id, total_steps, start_date, end_date) VALUES ("+player_id+", "+caravan_id+", 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);", function (err, result, fields) {
     if (err) console.log(err);
     return callback(true);
   });
