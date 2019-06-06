@@ -185,7 +185,7 @@ router.post('/caravan/checkOwner', (req, res) => {
 
 
 router.post('/caravan/getPublic', (req, res) => {
-    db.getPublicCaravans(req.body, function(data) {
+    db.getPublicCaravans(function(data) {
         if (data) {
             res.status(201).send(data)
         } 
