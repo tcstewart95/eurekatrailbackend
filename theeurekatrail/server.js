@@ -22,4 +22,13 @@ app.use('*', function(req, res) {
 });
 
 //build and run the server
-https.createServer(options, app).listen(8001, function() { console.log('listening on port 8001!'); })
+var server = https.createServer(options, app);
+server.listen(8001, function() { console.log('listening on port 8001!'); })
+
+
+// https://stackoverflow.com/questions/6599470/node-js-socket-io-with-ssl
+var io = require('socket.io').listen(server);
+
+io.on('connection', function(socket) {
+  console.log('CONNECTION MADE')
+});
