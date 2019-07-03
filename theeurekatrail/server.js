@@ -13,6 +13,10 @@ var options = {
 //use express for routing
 const app = express()
 
+app.get('/', function(req, res) {
+  res.sendFile('./files/index.html');
+});
+
 //default route for all api calls
 app.use('/api', api)
 
