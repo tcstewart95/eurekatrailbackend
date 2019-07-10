@@ -14,7 +14,7 @@ var options = {
 const app = express()
 
 app.get('/', function(req, res) {
-  res.sendFile('./files/index.html');
+  res.sendFile(__dirname + '/files/index.html');
 });
 
 //default route for all api calls
