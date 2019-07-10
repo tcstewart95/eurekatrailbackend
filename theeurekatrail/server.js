@@ -34,5 +34,9 @@ server.listen(8001, function() { console.log('listening on port 8001!'); })
 var io = require('socket.io').listen(server);
 
 io.on('connection', function(socket) {
-  console.log('CONNECTION MADE')
+  console.log('CONNECTION MADE');
+});
+
+io.on('1', function(socket) {
+  console.log('1 Event Caught');
 });
