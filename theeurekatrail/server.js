@@ -13,7 +13,7 @@ var options = {
 //use express for routing
 const app = express()
 
-app.get('/', function(req, res) {
+app.get('/', function (req, res) {
   res.sendFile(__dirname + '/files/index.html');
 });
 
@@ -21,22 +21,26 @@ app.get('/', function(req, res) {
 app.use('/api', api)
 
 //alert if no route applies
-app.use('*', function(req, res) {
+app.use('*', function (req, res) {
   res.send('page not found');
 });
 
 //build and run the server
 var server = https.createServer(options, app);
-server.listen(8001, function() { console.log('listening on port 8001!'); })
+server.listen(8001, function () { console.log('listening on port 8001!'); })
 
 
 // https://stackoverflow.com/questions/6599470/node-js-socket-io-with-ssl
 var io = require('socket.io').listen(server);
 
-io.on('connection', function(socket) {
+io.on('connection', function (socket) {
   console.log('CONNECTION MADE');
-});
+  console.log(socket.id);
 
-io.on('1', function(socket) {
-  console.log('1 Event Caught');
+  io.emit('hi', 'This works');
+
+  socket.on('joinRoom', function (data) {
+    console.log('Event Caught');
+    console.log(data);
+  });
 });
