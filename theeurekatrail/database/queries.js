@@ -16,8 +16,8 @@ const checkexists = function (email, callback) {
 }
 
 //creates a new player account without joining them to a company.
-const createAccount = function (google_auth,  facebook_auth, firstname, lastname, hp, caravan_id, authenticated, callback) {
-  client.query("INSERT INTO player (google_oauth,  facebook_oauth, firstname, lastname, hp, caravan_id, authenticated) VALUES ('"+google_auth+"', '"+facebook_auth+"', '"+firstname+"', '"+lastname+"', "+hp+", "+caravan_id+", "+authenticated+");", function (err, result, fields) {
+const createAccount = function (google_auth,  facebook_auth, firstname, lastname, hp, authenticated, callback) {
+  client.query("INSERT INTO player (google_oauth, facebook_oauth, firstname, lastname, hp, authenticated) VALUES ('"+google_auth+"', '"+facebook_auth+"', '"+firstname+"', '"+lastname+"', "+hp+", "+authenticated+");", function (err, result, fields) {
     if (err) {
       console.log(err);
     } else {

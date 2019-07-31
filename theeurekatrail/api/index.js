@@ -21,10 +21,10 @@ router.post('/user/checkexists', (req, res) => {
 })
 
 router.post('/user/create', (req, res) => {
-    const {google_auth, facebook_auth, firstname, lastname, hp, caravan_id, authenticated} = req.body
-    db.createAccount(google_auth, facebook_auth, firstname, lastname, hp, caravan_id, authenticated, function (data) {
+    const {google_auth, facebook_auth, firstname, lastname, hp, authenticated} = req.body
+    db.createAccount(google_auth, facebook_auth, firstname, lastname, hp, authenticated, function (data) {
         if (data) {
-           res.status(201).send('user created')
+           res.status(201).send(data)
         }
         else {
            res.status(218).send('unable to create user')
