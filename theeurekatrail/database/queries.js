@@ -21,7 +21,7 @@ const createAccount = function (google_auth,  facebook_auth, firstname, lastname
     if (err) {
       console.log(err);
     } else {
-      client.query("SELECT * FROM player WHERE google_oauth = '"+google_auth+"' AND facebook_oauth = '"+facebook_auth+"';", function (err, result, fields) {
+      client.query("SELECT id FROM player WHERE google_oauth = '"+google_auth+"' AND facebook_oauth = '"+facebook_auth+"';", function (err, result, fields) {
         if (err) {
           console.log(err);
         } else {
