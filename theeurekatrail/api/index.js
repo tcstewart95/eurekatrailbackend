@@ -21,8 +21,8 @@ router.post('/user/checkexists', (req, res) => {
 })
 
 router.post('/user/create', (req, res) => {
-    const {email, firstname, lastname, hp, company_id, image, authenticated} = req.body
-    db.createAccount(email, firstname, lastname, hp, company_id, image, authenticated, function (data) {
+    const {google_auth, facebook_auth, firstname, lastname, hp, caravan_id, authenticated} = req.body
+    db.createAccount(google_auth, facebook_auth, firstname, lastname, hp, caravan_id, authenticated, function (data) {
         if (data) {
            res.status(201).send('user created')
         }
