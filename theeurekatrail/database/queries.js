@@ -130,7 +130,7 @@ const createCaravan = function (name, owner_id, private, join_code, callback) {
 //adds a player to a caravan.
 const joinCaravan = function (player_id, caravan_id, callback) {
   // Check if caravan is full
-  client.query("SELECT count, capacity FROM caravan WHERE id = '"+caravan_id+"');", function (err, result, fields) {
+  client.query("SELECT count, capacity FROM caravan WHERE id = "+caravan_id+";", function (err, result, fields) {
     if (err) console.log(err);
     if (result[0].count < result[0].capacity) {
       client.query("UPDATE caravan SET count = count+1 WHERE id ="+caravan_id);
