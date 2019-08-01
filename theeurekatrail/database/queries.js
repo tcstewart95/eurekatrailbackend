@@ -132,12 +132,17 @@ const joinCaravan = function (player_id, caravan_id, callback) {
   // Check if caravan is full
   client.query("SELECT count, capacity FROM caravan WHERE id = '"+caravan_id+"');", function (err, result, fields) {
     if (err) console.log(err);
-    console.log(result);
+    if (result[0].count < result[0].capacity) {
+      client.query("UPDATE caravan SET count = count+1 WHERE id ="+caravan_id);
+      client.query("INSERT INTO plays_in (player_id, caravan_id, total_steps, start_date, end_date) VALUES ("+player_id+", "+caravan_id+", 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);", function (err, result, fields) {
+        if (err) console.log(err);
+        return callback(true);
+      });
+    }
+    else {
+      return callback(false);
+    }
   })
-  client.query("INSERT INTO plays_in (player_id, caravan_id, total_steps, start_date, end_date) VALUES ("+player_id+", "+caravan_id+", 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);", function (err, result, fields) {
-    if (err) console.log(err);
-    return callback(true);
-  });
 }
 
 //gets ID of caravan
