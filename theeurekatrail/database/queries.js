@@ -129,6 +129,11 @@ const createCaravan = function (name, owner_id, private, join_code, callback) {
 
 //adds a player to a caravan.
 const joinCaravan = function (player_id, caravan_id, callback) {
+  // Check if caravan is full
+  client.query("SELECT count, capacity FROM caravan WHERE id = '"+caravan_id+"');", function (err, result, fields) {
+    if (err) console.log(err);
+    console.log(result);
+  })
   client.query("INSERT INTO plays_in (player_id, caravan_id, total_steps, start_date, end_date) VALUES ("+player_id+", "+caravan_id+", 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);", function (err, result, fields) {
     if (err) console.log(err);
     return callback(true);
