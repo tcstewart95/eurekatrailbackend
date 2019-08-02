@@ -21,8 +21,8 @@ router.post('/user/checkexists', (req, res) => {
 })
 
 router.post('/user/create', (req, res) => {
-    const {google_auth, facebook_auth, firstname, lastname, hp, authenticated} = req.body
-    db.createAccount(google_auth, facebook_auth, firstname, lastname, hp, authenticated, function (data) {
+    const {google_auth, facebook_auth, firstname, lastname, authenticated} = req.body
+    db.createAccount(google_auth, facebook_auth, firstname, lastname, authenticated, function (data) {
         if (data) {
            res.status(201).send(data)
         }
@@ -135,8 +135,8 @@ router.post('/caravan/checkExists', (req, res) => {
 
 
 router.post('/caravan/create', (req, res) => {
-    const {name, owner_id, private, join_code} = req.body
-    db.createCaravan(name, owner_id, private, join_code, function (data) {
+    const {name, owner_id, private, join_code, player_max} = req.body
+    db.createCaravan(name, owner_id, private, join_code, player_max, function (data) {
         if (data) 
             res.status(201).send(data)
             

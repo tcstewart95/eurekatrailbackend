@@ -1,8 +1,8 @@
 const mysql = require('mysql')
 
 const client = mysql.createConnection({
-  user: "playerAccount",
-  password: "n*M|t9%Ai5yTN9+N",
+  user: "root",
+  password: "",
   host: "localhost",
   database: "the_eureka_trail"
 })
@@ -16,8 +16,8 @@ const checkexists = function (email, callback) {
 }
 
 //creates a new player account without joining them to a company.
-const createAccount = function (google_auth,  facebook_auth, firstname, lastname, hp, authenticated, callback) {
-  client.query("INSERT INTO player (google_oauth, facebook_oauth, firstname, lastname, hp, authenticated) VALUES ('"+google_auth+"', '"+facebook_auth+"', '"+firstname+"', '"+lastname+"', "+hp+", "+authenticated+");", function (err, result, fields) {
+const createAccount = function (google_auth,  facebook_auth, firstname, lastname, authenticated, callback) {
+  client.query("INSERT INTO player (google_oauth, facebook_oauth, firstname, lastname, authenticated) VALUES ('"+google_auth+"', '"+facebook_auth+"', '"+firstname+"', '"+lastname+"', "+authenticated+");", function (err, result, fields) {
     if (err) {
       console.log(err);
     } else {
@@ -111,8 +111,8 @@ const checkCaravanExists = function (join_code, callback) {
 }
 
 //creates a new caravan.
-const createCaravan = function (name, owner_id, private, join_code, callback) {
-  client.query("INSERT INTO caravan (name, location_id, image, launched, owner_id, private, join_code) VALUES ('"+name+"', 0, 'graphics/role5.png', 0, "+owner_id+", "+private+", '"+join_code+"');", function (err, result, fields) {
+const createCaravan = function (name, owner_id, private, join_code, player_max, callback) {
+  client.query("INSERT INTO caravan (name, location_id, launched, owner_id, private, join_code, player_max, player_count) VALUES ('"+name+"', 0, 0, "+owner_id+", "+private+", '"+join_code+"', "+player_max+", 0);", function (err, result, fields) {
     if (err) {
       console.log(err);
     } else {
@@ -130,11 +130,11 @@ const createCaravan = function (name, owner_id, private, join_code, callback) {
 //adds a player to a caravan.
 const joinCaravan = function (player_id, caravan_id, callback) {
   // Check if caravan is full
-  client.query("SELECT count, capacity FROM caravan WHERE id = "+caravan_id+";", function (err, result, fields) {
+  client.query("SELECT player_count, player_max FROM caravan WHERE id = "+caravan_id+";", function (err, result, fields) {
     if (err) console.log(err);
-    if (result[0].count < result[0].capacity) {
-      client.query("UPDATE caravan SET count = count+1 WHERE id ="+caravan_id);
-      client.query("INSERT INTO plays_in (player_id, caravan_id, total_steps, start_date, end_date) VALUES ("+player_id+", "+caravan_id+", 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);", function (err, result, fields) {
+    if (result[0].player_count < result[0].player_max) {
+      client.query("UPDATE caravan SET player_count = player_count+1 WHERE id ="+caravan_id);
+      client.query("INSERT INTO plays_in (player_id, caravan_id, character_id) VALUES ("+player_id+", "+caravan_id+", 0);", function (err, result, fields) {
         if (err) console.log(err);
         return callback(true);
       });
