@@ -155,7 +155,7 @@ const getCaravanId = function(email, callback) {
 
 //gets all IDs, names, of public caravans
 const  getPublicCaravans = function(callback) {
-  client.query("SELECT id, name FROM caravan WHERE private = 0 AND count < capacity", function (err, result, fields) {
+  client.query("SELECT id, name, player_count, player_max FROM caravan WHERE private = 0 AND player_count < player_max", function (err, result, fields) {
     if (err) console.log(err);
     return callback(result);
   })
