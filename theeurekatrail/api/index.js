@@ -181,10 +181,11 @@ router.post('/caravan/join', (req, res) => {
     const {player_id, caravan_id} = req.body
     db.joinCaravan(player_id, caravan_id, function (data) {
         if (data) {
-            res.status(201).send('Joined caravan')
+            res.status(201).send(data)
         } 
         else {
-            res.status(218).send('Unable to join caravan')
+            // Unable to join caravan
+            res.status(218).send(null)
         } 
     })
 })

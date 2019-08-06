@@ -163,11 +163,11 @@ const joinCaravan = function (player_id, caravan_id, callback) {
       client.query("UPDATE caravan SET player_count = player_count+1 WHERE id ="+caravan_id);
       client.query("INSERT INTO plays_in (player_id, caravan_id, character_id) VALUES ("+player_id+", "+caravan_id+", 0);", function (err, result, fields) {
         if (err) console.log(err);
-        return callback(true);
+        return callback({"caravan_id":caravan_id});
       });
     }
     else {
-      return callback(false);
+      return callback(null);
     }
   })
 }
