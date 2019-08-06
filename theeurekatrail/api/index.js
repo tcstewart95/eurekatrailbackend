@@ -81,18 +81,36 @@ router.post('/user/getID', (req, res) => {
     })  
 })
 
-
 router.post('/user/add/role', (req, res) => {
-    const {id, hp, roleId} = req.body
-    db.addRole(id, hp, roleId, function(data) {
-        if(data) {
-            res.status(201).send('user role added')
-        }
-        else {
-            res.status(218).send('unable to add user role')
-        }
-    })  
+    const {id, userRole, userName, userGender} = req.body
+    db.addRole(id, userRole, userName, userGender, function (data) {
+        if (data) res.status(201).send(data);
+        else res.status(218).send('unable to get role from id');
+    })
 })
+
+// router.post('/user/add/role', (req, res) => {
+//     const {id, userRole, userName, userGender} = req.body
+//     db.getRoleIDFromTitle(userRole, function (data) {
+//         if (data) {
+//             var role_id = data;
+//             console.log(data);
+//             db.addRole(id, role_id, userName, userGender, function(data) {
+//                 if(data) {
+//                     db.copyCharacterSkills(id, role_id, function (data) {
+//                         if(data) res.status(201).send('skills for role added');
+//                         else res.status(218).send('unable to copy skills for role');
+//                     });
+//                     db.copyCharacterItems(id, role_id, function (data) {
+//                         if(data) res.status(201).send('inventory for role added');
+//                         else res.status(218).send('unable to copy inventory for role');
+//                     });                   
+//                 }
+//                 else res.status(218).send('unable to add user role');
+//             })  
+//         } else res.status(218).send('unable to get role from id');
+//     })
+// })
 
 
 router.post('/inventory/addPlayer', (req, res) => {

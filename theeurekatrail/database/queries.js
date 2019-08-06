@@ -56,22 +56,49 @@ const getID = function (email, callback) {
   });
 }
 
-//needs testing
-const addRole = function (id, hp, roleId, callback) {
-  client.query("UPDATE player SET hp = "+hp+" WHERE id = "+id+";", function (err, result, fields) {
-    if (err) {
-      console.log(err);
-    } else {
-      client.query("Update plays_in SET role_id = "+roleId+" WHERE player_id = "+id+";", function (err, result, fields) {
+// const getRoleIDFromTitle = function (userRole, callback) {
+//   client.query("SELECT id FROM role WHERE title = '"+userRole+"';", function (err, result, fields) {
+//     if (err) console.log(err); 
+//     else return callback(result);
+//   });
+// }
+
+
+// Note that character is a key word
+const addRole = function (id, userRole, userName, userGender, callback) {
+  client.query("UPDATE the_eureka_trail.character SET role_id = (SELECT id FROM role WHERE title = '"+userRole+"'),  name = '"+userName+"', gender = "+userGender+", max_hp = (SELECT max_hp FROM role WHERE id = (SELECT id FROM role WHERE title = '"+userRole+"')), current_hp = (SELECT max_hp FROM role WHERE id = (SELECT id FROM role WHERE title = '"+userRole+"')), money = (SELECT starting_money FROM role WHERE id = (SELECT id FROM role WHERE title = '"+userRole+"')), wage = (SELECT starting_wage FROM role WHERE id = (SELECT id FROM role WHERE title = '"+userRole+"')) WHERE id = "+id+";", function (err, result, fields) {
+    if (err) console.log(err);
+    else {
+      client.query("INSERT INTO character_has_skill (character_id, skill_id) SELECT the_eureka_trail.character.id, role_has_skill.skill_id FROM role_has_skill INNER JOIN role ON role_has_skill.role_id = role.id INNER JOIN the_eureka_trail.character ON role.id = the_eureka_trail.character.role_id WHERE role_has_skill.role_id = (SELECT id FROM role WHERE title = '"+userRole+"') AND the_eureka_trail.character.id = "+id+";", function(err, result, fields) {
         if (err) {
           console.log(err);
         } else {
-          return callback(result);
+          client.query("INSERT INTO character_has_item (character_id, item_id) SELECT the_eureka_trail.character.id, role_has_item.item_id FROM role_has_item INNER JOIN role ON role_has_item.role_id = role.id INNER JOIN the_eureka_trail.character ON role.id = the_eureka_trail.character.role_id WHERE role_has_item.role_id = (SELECT id FROM role WHERE title = '"+userRole+"') AND the_eureka_trail.character.id = "+id+";", function(err, result, fields) {
+            if (err) {
+              console.log(err);
+            } else {
+              return callback(result);
+            }
+          });
         }
       });
     }
   });
 }
+
+// const copyCharacterSkills = function (character_id, role_id, callback) {
+//   client.query("INSERT INTO character_has_skill (character_id, skill_id) VALUES ((SELECT id FROM role WHERE title = '"+userRole+"'), (SELECT skill_id FROM role_has_skill WHERE role_id = "+role_id+"));", function (err, result, fields) {
+//     if (err) console.log(err);
+//     return callback(result);
+//   });
+// }
+
+// const copyCharacterItems = function (character_id, role_id, callback) {
+//   client.query("INSERT INTO character_has_item (character_id, item_id) VALUES ("+character_id+", (SELECT item_id FROM role_has_item WHERE role_id = "+role_id+"));", function (err, result, fields) {
+//     if (err) console.log(err);
+//     return callback(result);
+//   });
+// }
 
 const checkinventoryexists = function (player_id, callback) {
   client.query("SELECT inventory_id FROM has_inventory WHERE player_id = '"+player_id+"';", function (err, result, fields) {
@@ -127,7 +154,7 @@ const createCaravan = function (name, owner_id, private, join_code, player_max, 
   });
 }
 
-//adds a player to a caravan.
+//adds a playes to a caravan.
 const joinCaravan = function (player_id, caravan_id, callback) {
   // Check if caravan is full
   client.query("SELECT player_count, player_max FROM caravan WHERE id = "+caravan_id+";", function (err, result, fields) {
