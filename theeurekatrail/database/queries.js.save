@@ -1,8 +1,8 @@
 const mysql = require('mysql')
 
 const client = mysql.createConnection({
-  user: "root",
-  password: "",
+  user: "playerAccount",
+  password: "n*M|t9%Ai5yTN9+N",
   host: "localhost",
   database: "the_eureka_trail"
 })
@@ -16,16 +16,17 @@ const checkexists = function (email, callback) {
 }
 
 //creates a new player account without joining them to a company.
-const createAccount = function (google_auth,  facebook_auth, firstname, lastname, authenticated, callback) {
-  client.query("INSERT INTO player (google_oauth, facebook_oauth, firstname, lastname, authenticated) VALUES ('"+google_auth+"', '"+facebook_auth+"', '"+firstname+"', '"+lastname+"', "+authenticated+");", function (err, result, fields) {
+const createAccount = function (google_auth,  facebook_auth, firstname, lastname, hp, authenticated, callback) {
+  client.query("INSERT INTO player (google_oauth, facebook_oauth, firstname, lastname, hp, authenticated) VALUES ('"+google_auth+"', '"+facebook_auth+"', '"+firstname+"', '"+lastname+"', "+hp+", "+authenticated+");", function (err, result, fields) {
     if (err) {
       console.log(err);
     } else {
       client.query("SELECT id FROM player WHERE google_oauth = '"+google_auth+"' AND facebook_oauth = '"+facebook_auth+"';", function (err, result, fields) {
         if (err) {
           console.log(err);
-        } 
-        return callback(result);
+        } else {
+          return callback(result);
+        }
       });
     }
   });
@@ -55,22 +56,17 @@ const getID = function (email, callback) {
   });
 }
 
-// Note that character is a key word
-const addRole = function (id, userRole, userName, userGender, callback) {
-  client.query("UPDATE the_eureka_trail.character SET role_id = (SELECT id FROM role WHERE title = '"+userRole+"'),  name = '"+userName+"', gender = "+userGender+", max_hp = (SELECT max_hp FROM role WHERE id = (SELECT id FROM role WHERE title = '"+userRole+"')), current_hp = (SELECT max_hp FROM role WHERE id = (SELECT id FROM role WHERE title = '"+userRole+"')), money = (SELECT starting_money FROM role WHERE id = (SELECT id FROM role WHERE title = '"+userRole+"')), wage = (SELECT starting_wage FROM role WHERE id = (SELECT id FROM role WHERE title = '"+userRole+"')) WHERE id = "+id+";", function (err, result, fields) {
-    if (err) console.log(err);
-    else {
-      client.query("INSERT INTO character_has_skill (character_id, skill_id) SELECT the_eureka_trail.character.id, role_has_skill.skill_id FROM role_has_skill INNER JOIN role ON role_has_skill.role_id = role.id INNER JOIN the_eureka_trail.character ON role.id = the_eureka_trail.character.role_id WHERE role_has_skill.role_id = (SELECT id FROM role WHERE title = '"+userRole+"') AND the_eureka_trail.character.id = "+id+";", function(err, result, fields) {
+//needs testing
+const addRole = function (id, hp, roleId, callback) {
+  client.query("UPDATE player SET hp = "+hp+" WHERE id = "+id+";", function (err, result, fields) {
+    if (err) {
+      console.log(err);
+    } else {
+      client.query("Update plays_in SET role_id = "+roleId+" WHERE player_id = "+id+";", function (err, result, fields) {
         if (err) {
           console.log(err);
         } else {
-          client.query("INSERT INTO character_has_item (character_id, item_id) SELECT the_eureka_trail.character.id, role_has_item.item_id FROM role_has_item INNER JOIN role ON role_has_item.role_id = role.id INNER JOIN the_eureka_trail.character ON role.id = the_eureka_trail.character.role_id WHERE role_has_item.role_id = (SELECT id FROM role WHERE title = '"+userRole+"') AND the_eureka_trail.character.id = "+id+";", function(err, result, fields) {
-            if (err) {
-              console.log(err);
-            } else {
-              return callback(result);
-            }
-          });
+          return callback(result);
         }
       });
     }
@@ -115,8 +111,8 @@ const checkCaravanExists = function (join_code, callback) {
 }
 
 //creates a new caravan.
-const createCaravan = function (name, owner_id, private, join_code, player_max, callback) {
-  client.query("INSERT INTO caravan (name, location_id, launched, owner_id, private, join_code, player_max, player_count) VALUES ('"+name+"', 0, 0, "+owner_id+", "+private+", '"+join_code+"', "+player_max+", 0);", function (err, result, fields) {
+const createCaravan = function (name, owner_id, private, join_code, callback) {
+  client.query("INSERT INTO caravan (name, location_id, image, launched, owner_id, private, join_code) VALUES ('"+name+"', 0, 'graphics/role5.png', 0, "+owner_id+", "+private+", '"+join_code+"');", function (err, result, fields) {
     if (err) {
       console.log(err);
     } else {
@@ -131,29 +127,17 @@ const createCaravan = function (name, owner_id, private, join_code, player_max, 
   });
 }
 
-//adds a playes to a caravan.
+//adds a player to a caravan.
 const joinCaravan = function (player_id, caravan_id, callback) {
   // Check if caravan is full
-  client.query("SELECT player_count, player_max FROM caravan WHERE id = "+caravan_id+";", function (err, result, fields) {
+  client.query("SELECT count, capacity FROM caravan WHERE id = "+caravan_id+"';", function (err, result, fields) {
     if (err) console.log(err);
-    if (result[0].player_count < result[0].player_max) {
-      client.query("UPDATE caravan SET player_count = player_count+1 WHERE id ="+caravan_id);
-      client.query("INSERT INTO plays_in (player_id, caravan_id, character_id) VALUES ("+player_id+", "+caravan_id+", 0);", function (err, result, fields) {
-        if (err) console.log(err);
-        return callback({"caravan_id":caravan_id});
-      });
-    }
-    else {
-      return callback(null);
-    }
+    console.log(result);
   })
-}
-
-const leaveCaravan = function (player_id, caravan_id, callback) {
-  client.query("DELETE FROM plays_in WHERE player_id = "+player_id+" AND caravan_id = "+cavan_id+";", function (err, result, fields) {
+  client.query("INSERT INTO plays_in (player_id, caravan_id, total_steps, start_date, end_date) VALUES ("+player_id+", "+caravan_id+", 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);", function (err, result, fields) {
     if (err) console.log(err);
-    return callback(result);
-  })
+    return callback(true);
+  });
 }
 
 //gets ID of caravan
@@ -166,9 +150,9 @@ const getCaravanId = function(email, callback) {
 
 //gets all IDs, names, of public caravans
 const  getPublicCaravans = function(callback) {
-  client.query("SELECT id, name, player_count, player_max FROM caravan WHERE private = 0 AND player_count < player_max", function (err, result, fields) {
+  client.query("SELECT id, name FROM caravan WHERE private = 0;", function (err, result, fields) {
     if (err) console.log(err);
-    else return callback(result);
+    return callback(result);
   })
 }
 
@@ -176,15 +160,7 @@ const  getPublicCaravans = function(callback) {
 const checkCaravanOwner = function(player_id, caravan_id, callback) {
   client.query("SELECT launched FROM caravan WHERE owner_id = "+player_id+" AND id = "+caravan_id+";", function (err, result, fields) {
     if (err) console.log(err);
-    else return callback(result);
-  })
-}
-
-//get all the roles of members of a caravan
-const getCaravanMemberRoles = function(caravan_id) {
-  client.query("SELECT role_id FROM the_eureka_trail.character INNER JOIN plays_in ON plays_in.character_id = the_eureka_trail.character.id WHERE plays_in.caravan_id = "+caravan_id+";", function (err, result, fields) {
-    if(err) console.log(err);
-    else return (result);
+    return callback(result);
   })
 }
 
@@ -207,6 +183,14 @@ const launchCaravan = function(caravan_id, callback) {
 //gets members of caravan in order of enrollment
 const selectCaravan = function(caravan_id, callback) {
   client.query("SELECT id, firstname, lastname FROM player p, plays_in pi WHERE p.id = pi.player_id AND pi.caravan_id = "+caravan_id+";", function (err, result, fields) {
+    if (err) console.log(err);
+    return callback(result);
+  })
+}
+
+//Gets role of caravan members in order of enrollment
+const getCaravanMemberRoles = function(caravan_id, callback) {
+  client.query("SELECT role_id FROM plays_in WHERE caravan_id = "+caravan_id+";", function (err, result, fields) {
     if (err) console.log(err);
     return callback(result);
   })
@@ -242,7 +226,6 @@ module.exports = {
  checkCaravanExists,
  createCaravan,
  joinCaravan,
- leaveCaravan,
  getCaravanId,
  getPublicCaravans,
  checkCaravanOwner,
