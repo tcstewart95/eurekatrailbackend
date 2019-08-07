@@ -1,8 +1,8 @@
 const mysql = require('mysql')
 
 const client = mysql.createConnection({
-  user: "root",
-  password: "",
+  user: "playerAccount",
+  password: "n*M|t9%Ai5yTN9+N",
   host: "localhost",
   database: "the_eureka_trail"
 })
