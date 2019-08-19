@@ -150,7 +150,8 @@ const joinCaravan = function (player_id, caravan_id, callback) {
 }
 
 const leaveCaravan = function (player_id, caravan_id, callback) {
-  client.query("DELETE FROM plays_in WHERE player_id = "+player_id+" AND caravan_id = "+cavan_id+";", function (err, result, fields) {
+  client.query("UPDATE caravan SET player_count = player_count-1 WHERE id ="+caravan_id);
+  client.query("DELETE FROM plays_in WHERE player_id = "+player_id+" AND caravan_id = "+caravan_id+";", function (err, result, fields) {
     if (err) console.log(err);
     return callback(result);
   })
