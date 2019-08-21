@@ -85,7 +85,7 @@ const checkinventoryexists = function (player_id, callback) {
 }
 
 //needs testing
-const addPlayerInventory = function (player_id, callback) {
+const addCharacterInventory = function (player_id, callback) {
   client.query("INSERT into inventory (caravan_id) VALUES ((SELECT caravan_id FROM plays_in WHERE player_id = "+player_id+"));", function (err, result, fields) {
     if (err) {
       console.log(err);
@@ -214,8 +214,9 @@ const selectCaravan = function(caravan_id, callback) {
 }
 
 //Adds a new record of steps for a player
-const addPlayerSteps = function(steps, callback) {
-  client.query("INSERT INTO steps ...............SUM(steps) FROM steps WHERE id = (SELECT step_record_id FROM has_steps WHERE caravan_id = "+caravan_id+") AND time_stamp >= (cast(CURRENT_TIMESTAMP-6 as date));", function (err, result, fields) {
+const addCharacterSteps = function(id, steps, callback) {
+  client.query("INSERT INTO steps (steps, time_stamp) VALUES ("+steps+", CURRENT_TIMESTAMP);");
+  client.query("INSERT INTO has_steps (character_id, step_record_id) VALUES ("+id+", LAST_INSERT_ID());", function (err, result, fields) {
     if (err) console.log(err);
     return callback(result);
   })
@@ -238,7 +239,7 @@ module.exports = {
  getID,
  addRole,
  checkinventoryexists,
- addPlayerInventory,
+ addCharacterInventory,
  getconversation,
  checkCaravanExists,
  createCaravan,
@@ -251,6 +252,6 @@ module.exports = {
  launchCaravan,
  selectCaravan,
  getCaravanMemberRoles,
- addPlayerSteps,
+ addCharacterSteps,
  getCaravanSteps
 }

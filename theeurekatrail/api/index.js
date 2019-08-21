@@ -89,9 +89,23 @@ router.post('/user/add/role', (req, res) => {
     })
 })
 
+
+
+
+router.post('/character/addSteps', (req, res) => {
+    const {character_id, steps} = req.body
+    db.addCharacterSteps(character_id, steps, function (data) {
+        if (data) res.status(201).send(data);
+        else res.status(218).send('unable to update character\s steps');
+    })
+})
+
+
+
+
 router.post('/inventory/addPlayer', (req, res) => {
     const {player_id} = req.body
-    db.addPlayerInventory(player_id, function(data) {
+    db.addCharacterInventory(player_id, function(data) {
         if(data) {
             res.status(201).send(data)
         }

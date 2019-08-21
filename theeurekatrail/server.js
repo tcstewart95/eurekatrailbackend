@@ -5,9 +5,9 @@ const api = require('./api');
 
 //set the key and certificate for SSL connections
 var options = {
-  key: fs.readFileSync('/etc/theeurekatrail.key'),
-  cert: fs.readFileSync('/etc/apache2/ssl/theeurekatrail_com.crt'),
-  ca: fs.readFileSync('/etc/apache2/ssl/DigiCertCA.crt')
+  //key: fs.readFileSync('/etc/theeurekatrail.key'),
+  //cert: fs.readFileSync('/etc/apache2/ssl/theeurekatrail_com.crt'),
+  //ca: fs.readFileSync('/etc/apache2/ssl/DigiCertCA.crt')
 };
 
 //use express for routing
