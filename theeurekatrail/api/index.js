@@ -295,32 +295,28 @@ router.post('/caravan/getSteps', (req, res) => {
 })
 
 
+// router.post('/steps/add', (req, res) => {
+//     const {steps} = req.body
+//     db.addSteps(steps, function (data) {
+//         if (data) {
+//             res.status(201).send(data)
+//         } 
+//         else {
+//             res.status(218).send('Unable to record steps')
+//         } 
+//     })
+// })
 
-
-
-
-router.post('/steps/add', (req, res) => {
-    const {steps} = req.body
-    db.addSteps(steps, function (data) {
-        if (data) {
-            res.status(201).send(data)
-        } 
-        else {
-            res.status(218).send('Unable to record steps')
-        } 
-    })
-})
-
-router.post('/steps/getCaravanSteps', (req, res) => {
-    const {caravan_id} = req.body
-    db.getCaravanSteps(caravan_id, function (data) {
-        if (data) {
-            res.status(201).send(data)
-        } 
-        else {
-            res.status(218).send('Unable to get caravan members steps')
-        } 
-    })
-})
+// router.post('/steps/getCaravanSteps', (req, res) => {
+//     const {caravan_id} = req.body
+//     db.getCaravanSteps(caravan_id, function (data) {
+//         if (data) {
+//             res.status(201).send(data)
+//         } 
+//         else {
+//             res.status(218).send('Unable to get caravan members steps')
+//         } 
+//     })
+// })
 
 module.exports = router
